@@ -3,18 +3,33 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'recipes',
     pathMatch: 'full'
   },
   {
     path: 'recipes',
-    loadChildren: () => import('./recipes/recipes.module').then( m => m.RecipesPageModule)
+    children:[
+      {path:"", loadChildren: () => import('./recipes/recipes.module').then( m => m.RecipesPageModule)},
+      {path:":recipeId", loadChildren: () => import('./recipes/recipe-details/recipe-details.module').then( m => m.RecipeDetailsPageModule)}
+    ]
   },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
+  },
+  {
+    path: 'discover',
+    loadChildren: () => import('./places/discover/discover.module').then( m => m.DiscoverPageModule)
+  },
+  {
+    path: 'offers',
+    loadChildren: () => import('./places/offers/offers.module').then( m => m.OffersPageModule)
+  },
+  {
+    path: 'bookings',
+    loadChildren: () => import('./bookings/bookings.module').then( m => m.BookingsPageModule)
+  }
 ];
 
 @NgModule({
